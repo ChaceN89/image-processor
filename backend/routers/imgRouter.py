@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, UploadFile, File
 from schemas.imgSchemas import AlterImg
 from fastapi import HTTPException
 
-
 # from functions.imgFuncs import resize
 # from backend.funcs.resizeImage import resize, enhance, convert, rotate, flip
 from funcs import resizeImg, enhanceImg, convertImg, positionImg
@@ -47,6 +46,7 @@ async def get_task_status(task_id: str):
     if task is None:
         raise HTTPException(status_code=404, detail="Task not found")
     return task
+
 
 # view the current task list with all tasks stored
 @router.get("/task-list/")

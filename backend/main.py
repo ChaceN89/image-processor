@@ -2,10 +2,22 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import imgRouter
 from fastapi.staticfiles import StaticFiles # for mounting files
-from globals import host
+from pathlib import Path
+from globals import host # the host running the frontend
+
+# import the folders to store images 
+from taskManager import  RESIZED_DIR, ENHANCED_DIR
+
+# Define the directories for images
+RESIZED_DIR = Path("images/resizedImages")
+ENHANCED_DIR = Path("images/enhancedImages")
 
 # create a fastapi app
 app = FastAPI()
+
+# Ensure directories exist before mount
+RESIZED_DIR.mkdir(parents=True, exist_ok=True)
+ENHANCED_DIR.mkdir(parents=True, exist_ok=True)
 
 # set up middleware
 app.add_middleware(
@@ -23,6 +35,7 @@ app.include_router(imgRouter.router, prefix="/api")  # Include imgRouter with /a
 app.mount("/resizedImages", StaticFiles(directory="images/resizedImages"), name="resizedImages")
 app.mount("/enhancedImages", StaticFiles(directory="images/enhancedImages"), name="enhancedImages")
 
+# start the application
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

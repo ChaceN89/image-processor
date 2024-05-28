@@ -8,6 +8,7 @@ from globals import api
 # the directory for these images
 SAVE_DIR = Path("./images/resizedImages")
 
+# fucntion to resize the image while also keeping track of the task progress
 def resize(task_id, file_content: bytes, schema):
     resizeWidth = schema.resizeWidth
     resizeHeight = schema.resizeHeight
@@ -35,15 +36,10 @@ def resize(task_id, file_content: bytes, schema):
     time.sleep(1)  # Simulate work being done
     tasks_status[task_id]["progress"] = 50
     
-    # # Save the file to the directory
-    # with open(save_path, "wb") as buffer:
-    #     buffer.write(file_content)
-
-    # Save the resized image to the directory
+    # Save the resized image to the directory - the diretory should exist  - but if error happen you can make sure it exists here
     with open(save_path, "wb") as buffer:
         resized_image.save(buffer, format=image.format)
 
-    
     time.sleep(1)  # Simulate work being done
     tasks_status[task_id]["progress"] = 75
     time.sleep(1)  # Simulate work being done
