@@ -17,7 +17,7 @@ router = APIRouter(
 # route to alter an image file based on a the specified operation 
 # frontend sends a task ID as well 
 @router.post("/alter-img/{task_id}")
-async def alter_img(task_id: str, file: UploadFile, schema: AlterImg = Depends()):
+async def alter_img(task_id: str, file: UploadFile = File(...), schema: AlterImg = Depends()):
     operation_map = {
         "Resize": resizeImg.resize,
         "Enhance": enhanceImg.enhance,
@@ -25,12 +25,15 @@ async def alter_img(task_id: str, file: UploadFile, schema: AlterImg = Depends()
         "Rotate": positionImg.rotate,
         "Flip": positionImg.flip
     }
-    # get the correct fucntion to use 
+    # get the correct function to use 
     task_function = operation_map.get(schema.operation)
+
+    # Read file content in the main thread
+    file_content = await file.read()
 
     # if found start a thread running that specific task
     if task_function:
-        return start_task(task_id, schema.operation, file.filename, lambda: task_function(task_id, file, schema))
+        return start_task(task_id, schema.operation, file.filename, lambda: task_function(task_id, file_content, schema))
     else:
         return {"status": "Invalid operation", "task_id": task_id}
 

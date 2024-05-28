@@ -48,3 +48,9 @@ def start_task(task_id, task_name, filename, task_function):
 
     # Inform that the task has started
     return {"status": f"{task_name} Task Started", "task_id": task_id}
+
+def checkOldTasks():
+    expiry_time = 1 # in mins
+
+    # remove old tasks that are older than expiry_time old
+    pass

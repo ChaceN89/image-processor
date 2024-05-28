@@ -1,23 +1,22 @@
-import shutil
-import time
 from taskManager import tasks_status
+from PIL import Image
+from io import BytesIO
+import time
 from pathlib import Path
-from fastapi import UploadFile
+from globals import api
 
+# the directory for these images
+SAVE_DIR = Path("./images/resizedImages")
 
-
-SAVE_DIR = Path("./resizedImages")
-
-def resize(task_id, file: UploadFile, schema):
-
+def resize(task_id, file_content: bytes, schema):
     resizeWidth = schema.resizeWidth
     resizeHeight = schema.resizeHeight
 
-    # Ensure the save directory exists
-    SAVE_DIR.mkdir(parents=True, exist_ok=True)
+    # get the original name
+    og_filename = tasks_status[task_id]["original_filename"] 
     
     # Define the new filename with task_id
-    new_filename = f"{task_id}_{file.filename}"
+    new_filename = f"{task_id}_{og_filename}"
     save_path = SAVE_DIR / new_filename
 
     # Update task status to "In Progress"
@@ -26,29 +25,34 @@ def resize(task_id, file: UploadFile, schema):
     tasks_status[task_id]["task_name"] = "Resize"
     tasks_status[task_id]["progress"] = 0
 
-    print(f"\n\nStarting resize task: {task_id}, file: {file.filename}, width: {resizeWidth}, height: {resizeHeight}\n\n")
-    print(f"\n\n file: {file}\n\n")
+    time.sleep(1)  # Simulate work being done
+    tasks_status[task_id]["progress"] = 25
 
+    # Resize the photo related to the width and height
+    image = Image.open(BytesIO(file_content))
+    resized_image = image.resize((resizeWidth, resizeHeight), Image.LANCZOS)
 
-    # Simulate processing
-    for i in range(1, 11):
-        time.sleep(0.4)  # Simulate work being done
-        tasks_status[task_id]["progress"] = i * 10
+    time.sleep(1)  # Simulate work being done
+    tasks_status[task_id]["progress"] = 50
     
-    # Save the file to the directory
-        # with open(save_path, "wb") as buffer:
-        #     buffer.write(file.file.read())
+    # # Save the file to the directory
+    # with open(save_path, "wb") as buffer:
+    #     buffer.write(file_content)
 
-        # # Reset file pointer for further operations if needed
-        # file.file.seek(0) 
-
+    # Save the resized image to the directory
+    with open(save_path, "wb") as buffer:
+        resized_image.save(buffer, format=image.format)
 
     
+    time.sleep(1)  # Simulate work being done
+    tasks_status[task_id]["progress"] = 75
+    time.sleep(1)  # Simulate work being done
+
     # Update task status to completed
     tasks_status[task_id]["status"] = "Completed"
     tasks_status[task_id]["progress"] = 100
 
     return {
-        "msg": f"{file.filename} successfully resized and saved as {new_filename}",
-        "file_url": f"/api/img/download/{new_filename}"
+        "msg": f"{og_filename} successfully resized.",
+        "file_url": f"/{api}/resizedImages/{new_filename}"
     }
