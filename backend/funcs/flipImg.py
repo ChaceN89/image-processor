@@ -6,40 +6,46 @@ from pathlib import Path
 from globals import api
 
 # Directory for these images
-CONVERTED_SAVE_DIR = Path("./images/convertedImages")
+FLIPPED_SAVE_DIR = Path("./images/flippedImages")
 
-# Function to convert the image format while also keeping track of the task progress
-def convert(task_id, file_content: bytes, schema):
-    convertTo = schema.convertTo
+# Function to flip the image while also keeping track of the task progress
+def flip(task_id, file_content: bytes, schema):
+    flipDirection = schema.flipDirection
 
     # Get the original name
     og_filename = tasks_status[task_id]["original_filename"] 
     
-    # Define the new filename with task_id and new extension
-    new_filename = f"{task_id}_{Path(og_filename).stem}.{convertTo.lower()}"
-    save_path = CONVERTED_SAVE_DIR / new_filename
+    # Define the new filename with task_id
+    new_filename = f"{task_id}_{og_filename}"
+    save_path = FLIPPED_SAVE_DIR / new_filename
 
     # Update task status to "In Progress"
     tasks_status[task_id]["status"] = "In Progress"
     tasks_status[task_id]["filename"] = new_filename
-    tasks_status[task_id]["task_name"] = "Convert"
+    tasks_status[task_id]["task_name"] = "Flip"
     tasks_status[task_id]["progress"] = 0
 
     time.sleep(1)  # Simulate work being done
     tasks_status[task_id]["progress"] = 25
 
-    # Convert the image to the new format
+    # Flip the image based on the direction
     image = Image.open(BytesIO(file_content))
+    if flipDirection == "horizontal":
+        flipped_image = image.transpose(Image.FLIP_LEFT_RIGHT)
+    elif flipDirection == "vertical":
+        flipped_image = image.transpose(Image.FLIP_TOP_BOTTOM)
+    else:
+        raise ValueError("Invalid flip direction")
 
     time.sleep(1)  # Simulate work being done
     tasks_status[task_id]["progress"] = 50
     
     # Ensure the directory exists
-    CONVERTED_SAVE_DIR.mkdir(parents=True, exist_ok=True)
+    FLIPPED_SAVE_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Save the converted image to the directory
+    # Save the flipped image to the directory
     with save_path.open("wb") as buffer:
-        image.save(buffer, format=convertTo.upper())
+        flipped_image.save(buffer, format=image.format)
 
     time.sleep(1)  # Simulate work being done
     tasks_status[task_id]["progress"] = 75
@@ -50,6 +56,6 @@ def convert(task_id, file_content: bytes, schema):
     tasks_status[task_id]["progress"] = 100
 
     return {
-        "msg": f"{og_filename} successfully converted to {convertTo}.",
-        "file_url": f"/{api}/convertedImages/{new_filename}"
+        "msg": f"{og_filename} successfully flipped.",
+        "file_url": f"/{api}/flippedImages/{new_filename}"
     }

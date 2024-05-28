@@ -6,40 +6,41 @@ from pathlib import Path
 from globals import api
 
 # Directory for these images
-CONVERTED_SAVE_DIR = Path("./images/convertedImages")
+ROTATED_SAVE_DIR = Path("./images/rotatedImages")
 
-# Function to convert the image format while also keeping track of the task progress
-def convert(task_id, file_content: bytes, schema):
-    convertTo = schema.convertTo
+# Function to rotate the image while also keeping track of the task progress
+def rotate(task_id, file_content: bytes, schema):
+    rotateDegrees = schema.rotateDegrees
 
     # Get the original name
     og_filename = tasks_status[task_id]["original_filename"] 
     
-    # Define the new filename with task_id and new extension
-    new_filename = f"{task_id}_{Path(og_filename).stem}.{convertTo.lower()}"
-    save_path = CONVERTED_SAVE_DIR / new_filename
+    # Define the new filename with task_id
+    new_filename = f"{task_id}_{og_filename}"
+    save_path = ROTATED_SAVE_DIR / new_filename
 
     # Update task status to "In Progress"
     tasks_status[task_id]["status"] = "In Progress"
     tasks_status[task_id]["filename"] = new_filename
-    tasks_status[task_id]["task_name"] = "Convert"
+    tasks_status[task_id]["task_name"] = "Rotate"
     tasks_status[task_id]["progress"] = 0
 
     time.sleep(1)  # Simulate work being done
     tasks_status[task_id]["progress"] = 25
 
-    # Convert the image to the new format
+    # Rotate the photo using rotateDegrees
     image = Image.open(BytesIO(file_content))
+    rotated_image = image.rotate(rotateDegrees, expand=True)
 
     time.sleep(1)  # Simulate work being done
     tasks_status[task_id]["progress"] = 50
     
     # Ensure the directory exists
-    CONVERTED_SAVE_DIR.mkdir(parents=True, exist_ok=True)
+    ROTATED_SAVE_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Save the converted image to the directory
+    # Save the rotated image to the directory
     with save_path.open("wb") as buffer:
-        image.save(buffer, format=convertTo.upper())
+        rotated_image.save(buffer, format=image.format)
 
     time.sleep(1)  # Simulate work being done
     tasks_status[task_id]["progress"] = 75
@@ -50,6 +51,6 @@ def convert(task_id, file_content: bytes, schema):
     tasks_status[task_id]["progress"] = 100
 
     return {
-        "msg": f"{og_filename} successfully converted to {convertTo}.",
-        "file_url": f"/{api}/convertedImages/{new_filename}"
+        "msg": f"{og_filename} successfully rotated.",
+        "file_url": f"/{api}/rotatedImages/{new_filename}"
     }

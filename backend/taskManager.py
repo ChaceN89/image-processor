@@ -9,12 +9,15 @@ executor = ThreadPoolExecutor(max_workers=4)
 tasks_status: Dict[str, Dict[str, str]] = {}
 
 # for the max storage of tasks
-MAX_TASKS = 50
+MAX_TASKS = 60
 TASK_EXPIRY_MINUTES = 20
 
 # Define the directories
 RESIZED_DIR = Path("images/resizedImages")
 ENHANCED_DIR = Path("images/enhancedImages")
+ROTATED_DIR = Path("images/rotatedImages")
+FLIPPED_DIR = Path("images/flippedImages")
+CONVERTED_DIR = Path("images/convertedImages")
 
 # Function to start a task 
 def start_task(task_id, task_name, filename, task_function):
@@ -72,8 +75,6 @@ def check_old_tasks():
     expired_tasks = [task_id for task_id, task in tasks_status.items() 
                      if datetime.strptime(task["time_started"], "%Y-%m-%d %H:%M:%S") < current_time - expiry_duration]
     
-    print("\nExpired takss")
-    print(expired_tasks)
     for task_id in expired_tasks:
         print("\n\n tasks to delete \n")
         delete_associated_file(task_id, tasks_status[task_id]["original_filename"], tasks_status[task_id]["task_name"])
@@ -88,21 +89,18 @@ def check_old_tasks():
 
 # fucntion to delete images related to the deleted tasks
 def delete_associated_file(task_id, filename, task_name):
-    print("\n\n neeed to delete delete\n")
     if task_name == "Resize":
-        print("\n resize delete\n\n")
         file_path = RESIZED_DIR / f"{task_id}_{filename}"
     elif task_name == "Enhance":
-        print("\n enhance delete\n\n")
         file_path = ENHANCED_DIR / f"{task_id}_{filename}"
+    elif task_name == "ROTATE":
+        file_path = ROTATED_DIR / f"{task_id}_{filename}"
     # add more here
     else:
-        print("\nthe else statement\n\n")
         return
     
     try:
         if file_path.exists():
             file_path.unlink()  # Delete the file
-            print(f"Deleted file: {file_path}")
     except Exception as e:
         print(f"Error deleting file {file_path}: {e}")

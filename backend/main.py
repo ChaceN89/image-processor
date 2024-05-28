@@ -6,11 +6,7 @@ from pathlib import Path
 from globals import host # the host running the frontend
 
 # import the folders to store images 
-from taskManager import  RESIZED_DIR, ENHANCED_DIR
-
-# Define the directories for images
-RESIZED_DIR = Path("images/resizedImages")
-ENHANCED_DIR = Path("images/enhancedImages")
+from taskManager import  RESIZED_DIR, ENHANCED_DIR, ROTATED_DIR, FLIPPED_DIR, CONVERTED_DIR
 
 # create a fastapi app
 app = FastAPI()
@@ -18,6 +14,9 @@ app = FastAPI()
 # Ensure directories exist before mount
 RESIZED_DIR.mkdir(parents=True, exist_ok=True)
 ENHANCED_DIR.mkdir(parents=True, exist_ok=True)
+ROTATED_DIR.mkdir(parents=True, exist_ok=True)
+FLIPPED_DIR.mkdir(parents=True, exist_ok=True)
+CONVERTED_DIR.mkdir(parents=True, exist_ok=True)
 
 # set up middleware
 app.add_middleware(

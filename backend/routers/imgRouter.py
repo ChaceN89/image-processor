@@ -4,7 +4,7 @@ from fastapi import HTTPException
 
 # from functions.imgFuncs import resize
 # from backend.funcs.resizeImage import resize, enhance, convert, rotate, flip
-from funcs import resizeImg, enhanceImg, convertImg, positionImg
+from funcs import resizeImg, enhanceImg, convertImg, flipImg, rotateImg
 from taskManager import start_task, tasks_status
 
 # set up the router for image processing with prefix and tags(for swagger UI)
@@ -21,8 +21,8 @@ async def alter_img(task_id: str, file: UploadFile = File(...), schema: AlterImg
         "Resize": resizeImg.resize,
         "Enhance": enhanceImg.enhance,
         "Convert": convertImg.convert,
-        "Rotate": positionImg.rotate,
-        "Flip": positionImg.flip
+        "Rotate": rotateImg.rotate,
+        "Flip": flipImg.flip
     }
     # get the correct function to use 
     task_function = operation_map.get(schema.operation)
