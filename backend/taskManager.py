@@ -9,8 +9,8 @@ executor = ThreadPoolExecutor(max_workers=4)
 tasks_status: Dict[str, Dict[str, str]] = {}
 
 # for the max storage of tasks
-MAX_TASKS = 5
-TASK_EXPIRY_MINUTES = 1
+MAX_TASKS = 50
+TASK_EXPIRY_MINUTES = 20
 
 # Define the directories
 RESIZED_DIR = Path("images/resizedImages")
@@ -72,24 +72,32 @@ def check_old_tasks():
     expired_tasks = [task_id for task_id, task in tasks_status.items() 
                      if datetime.strptime(task["time_started"], "%Y-%m-%d %H:%M:%S") < current_time - expiry_duration]
     
+    print("\nExpired takss")
+    print(expired_tasks)
     for task_id in expired_tasks:
+        print("\n\n tasks to delete \n")
         delete_associated_file(task_id, tasks_status[task_id]["original_filename"], tasks_status[task_id]["task_name"])
         del tasks_status[task_id]
 
     # If there are still too many tasks, remove the oldest
     while len(tasks_status) > MAX_TASKS:
+        print("too many tasks")
         oldest_task_id = min(tasks_status, key=lambda task_id: datetime.strptime(tasks_status[task_id]["time_started"], "%Y-%m-%d %H:%M:%S"))
         delete_associated_file(oldest_task_id, tasks_status[oldest_task_id]["original_filename"], tasks_status[oldest_task_id]["task_name"])
         del tasks_status[oldest_task_id]
 
 # fucntion to delete images related to the deleted tasks
 def delete_associated_file(task_id, filename, task_name):
+    print("\n\n neeed to delete delete\n")
     if task_name == "Resize":
+        print("\n resize delete\n\n")
         file_path = RESIZED_DIR / f"{task_id}_{filename}"
     elif task_name == "Enhance":
+        print("\n enhance delete\n\n")
         file_path = ENHANCED_DIR / f"{task_id}_{filename}"
     # add more here
     else:
+        print("\nthe else statement\n\n")
         return
     
     try:
