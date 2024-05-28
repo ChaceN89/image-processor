@@ -9,8 +9,8 @@ executor = ThreadPoolExecutor(max_workers=4)
 tasks_status: Dict[str, Dict[str, str]] = {}
 
 # for the max storage of tasks
-MAX_TASKS = 60
-TASK_EXPIRY_MINUTES = 20
+MAX_TASKS = 3
+TASK_EXPIRY_MINUTES = 1
 
 # Define the directories
 RESIZED_DIR = Path("images/resizedImages")
@@ -93,9 +93,13 @@ def delete_associated_file(task_id, filename, task_name):
         file_path = RESIZED_DIR / f"{task_id}_{filename}"
     elif task_name == "Enhance":
         file_path = ENHANCED_DIR / f"{task_id}_{filename}"
-    elif task_name == "ROTATE":
+    elif task_name == "Rotate":
         file_path = ROTATED_DIR / f"{task_id}_{filename}"
-    # add more here
+    elif task_name == "Flip":
+        file_path = FLIPPED_DIR / f"{task_id}_{filename}"
+    elif task_name == "Convert":
+        file_path = CONVERTED_DIR / f"{task_id}_{filename}"
+    
     else:
         return
     

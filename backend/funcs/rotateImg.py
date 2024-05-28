@@ -1,9 +1,9 @@
-from taskManager import tasks_status
 from PIL import Image
 from io import BytesIO
-import time
 from pathlib import Path
 from globals import api
+from funcs.setStatus import set_initial_status, set_mid_status, set_end_status
+
 
 # Directory for these images
 ROTATED_SAVE_DIR = Path("./images/rotatedImages")
@@ -12,28 +12,14 @@ ROTATED_SAVE_DIR = Path("./images/rotatedImages")
 def rotate(task_id, file_content: bytes, schema):
     rotateDegrees = schema.rotateDegrees
 
-    # Get the original name
-    og_filename = tasks_status[task_id]["original_filename"] 
-    
-    # Define the new filename with task_id
-    new_filename = f"{task_id}_{og_filename}"
-    save_path = ROTATED_SAVE_DIR / new_filename
-
-    # Update task status to "In Progress"
-    tasks_status[task_id]["status"] = "In Progress"
-    tasks_status[task_id]["filename"] = new_filename
-    tasks_status[task_id]["task_name"] = "Rotate"
-    tasks_status[task_id]["progress"] = 0
-
-    time.sleep(1)  # Simulate work being done
-    tasks_status[task_id]["progress"] = 25
+    # function to set the initial status
+    save_path, new_filename, og_filename = set_initial_status("Rotate", task_id, ROTATED_SAVE_DIR)
 
     # Rotate the photo using rotateDegrees
     image = Image.open(BytesIO(file_content))
     rotated_image = image.rotate(rotateDegrees, expand=True)
 
-    time.sleep(1)  # Simulate work being done
-    tasks_status[task_id]["progress"] = 50
+    set_mid_status(task_id)
     
     # Ensure the directory exists
     ROTATED_SAVE_DIR.mkdir(parents=True, exist_ok=True)
@@ -42,13 +28,7 @@ def rotate(task_id, file_content: bytes, schema):
     with save_path.open("wb") as buffer:
         rotated_image.save(buffer, format=image.format)
 
-    time.sleep(1)  # Simulate work being done
-    tasks_status[task_id]["progress"] = 75
-    time.sleep(1)  # Simulate work being done
-
-    # Update task status to completed
-    tasks_status[task_id]["status"] = "Completed"
-    tasks_status[task_id]["progress"] = 100
+    set_end_status(task_id)
 
     return {
         "msg": f"{og_filename} successfully rotated.",

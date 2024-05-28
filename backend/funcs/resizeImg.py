@@ -1,9 +1,8 @@
-from taskManager import tasks_status
 from PIL import Image
 from io import BytesIO
-import time
 from pathlib import Path
 from globals import api
+from funcs.setStatus import set_initial_status, set_mid_status, set_end_status
 
 # the directory for these images
 SAVE_DIR = Path("./images/resizedImages")
@@ -12,41 +11,24 @@ SAVE_DIR = Path("./images/resizedImages")
 def resize(task_id, file_content: bytes, schema):
     resizeWidth = schema.resizeWidth
     resizeHeight = schema.resizeHeight
-
-    # get the original name
-    og_filename = tasks_status[task_id]["original_filename"] 
     
-    # Define the new filename with task_id
-    new_filename = f"{task_id}_{og_filename}"
-    save_path = SAVE_DIR / new_filename
-
-    # Update task status to "In Progress"
-    tasks_status[task_id]["status"] = "In Progress"
-    tasks_status[task_id]["filename"] = new_filename
-    tasks_status[task_id]["task_name"] = "Resize"
-    tasks_status[task_id]["progress"] = 0
-
-    time.sleep(1)  # Simulate work being done
-    tasks_status[task_id]["progress"] = 25
+    # function to set the initial status
+    save_path, new_filename, og_filename = set_initial_status("Resize", task_id, SAVE_DIR)
 
     # Resize the photo related to the width and height
     image = Image.open(BytesIO(file_content))
     resized_image = image.resize((resizeWidth, resizeHeight), Image.LANCZOS)
 
-    time.sleep(1)  # Simulate work being done
-    tasks_status[task_id]["progress"] = 50
-    
+    set_mid_status(task_id)
+
+    # Ensure the directory exists
+    SAVE_DIR.mkdir(parents=True, exist_ok=True)
+
     # Save the resized image to the directory - the diretory should exist  - but if error happen you can make sure it exists here
     with open(save_path, "wb") as buffer:
         resized_image.save(buffer, format=image.format)
 
-    time.sleep(1)  # Simulate work being done
-    tasks_status[task_id]["progress"] = 75
-    time.sleep(1)  # Simulate work being done
-
-    # Update task status to completed
-    tasks_status[task_id]["status"] = "Completed"
-    tasks_status[task_id]["progress"] = 100
+    set_end_status(task_id)
 
     return {
         "msg": f"{og_filename} successfully resized.",
