@@ -1,29 +1,37 @@
 import React, { useState } from 'react';
-import { useImageContext } from '../../context/ImageContext';
+import { Task, useImageContext } from '../../context/ImageContext';
 import { generateUUID } from '../../services/utils'; // Adjust the path as necessary
+import { startTask } from '../../services/api'; // Import the startTask function
 
 const Flip: React.FC = () => {
-  const { addTask, selectedFile } = useImageContext();
+  const { addTask, selectedFile, updateTaskStatus } = useImageContext();
   const [flipDirection, setFlipDirection] = useState<string>('horizontal');
 
   const flipOptions = ['horizontal', 'vertical']; // Array for flip directions
 
-  const handleStartTask = () => {
+  const handleStartTask = async () => {
     if (!selectedFile) {
       alert('Please select a file.');
       return;
     }
 
     const taskId = generateUUID();
-    const newTask = {
+    const newTask: Task = {
       taskId,
       operation: 'Flip',
       status: 'Pending',
+      progress: 0,
       flipDirection,
-      image: selectedFile,
     };
     addTask(newTask);
-    alert(`Flip task started with ID: ${taskId}`);
+
+    try {
+      const result = await startTask(newTask, selectedFile);
+      updateTaskStatus(taskId, 'Completed');
+      // Update the task with the result if necessary
+    } catch (error) {
+      updateTaskStatus(taskId, 'Failed');
+    }
   };
 
   return (

@@ -1,6 +1,6 @@
 import React from 'react';
-import { useImageContext } from '../../context/ImageContext';
-import DisplaySelectedFile from '../subcomponents/DisplaySelectedFile';
+import { useImageContext } from '../context/ImageContext';
+import DisplaySelectedFile from './subcomponents/DisplaySelectedFile';
 
 
 const UploadImg: React.FC = () => {

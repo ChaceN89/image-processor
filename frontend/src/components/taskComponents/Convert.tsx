@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
-import { useImageContext } from '../../context/ImageContext';
+import { Task, useImageContext } from '../../context/ImageContext';
 import { generateUUID } from '../../services/utils'; // Adjust the path as necessary
+import { startTask } from '../../services/api'; // Import the startTask function
 
 const Convert: React.FC = () => {
-
-  // get the fucntion 
-  const { addTask, selectedFile } = useImageContext();
+  const { addTask, selectedFile, updateTaskStatus } = useImageContext();
   const [selectedFormat, setSelectedFormat] = useState<string>('');
 
-  // lsit of possible conversions 
   const conversionList = ['png', 'jpg', 'bmp', 'gif']; // Example conversion types
 
-  const handleStartTask = () => {
+  const handleStartTask = async () => {
     if (!selectedFormat) {
       alert('Please select a conversion type.');
       return;
@@ -22,15 +20,22 @@ const Convert: React.FC = () => {
     }
 
     const taskId = generateUUID();
-    const newTask = {
+    const newTask: Task = {
       taskId,
       operation: 'Convert',
       status: 'Pending',
+      progress: 0,
       convertTo: selectedFormat,
-      image:selectedFile,
     };
     addTask(newTask);
-    // alert(`Task started with ID: ${taskId}`);
+
+    try {
+      const result = await startTask(newTask, selectedFile);
+      // Update the task with the result if necessary
+      alert(result)
+    } catch (error) {
+      alert(error)
+    }
   };
 
   return (

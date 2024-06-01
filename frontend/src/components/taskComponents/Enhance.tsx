@@ -1,27 +1,35 @@
 import React, { useState } from 'react';
-import { useImageContext } from '../../context/ImageContext';
+import { Task, useImageContext } from '../../context/ImageContext';
 import { generateUUID } from '../../services/utils'; // Adjust the path as necessary
+import { startTask } from '../../services/api'; // Import the startTask function
 
 const Enhance: React.FC = () => {
-  const { addTask, selectedFile } = useImageContext();
+  const { addTask, selectedFile, updateTaskStatus } = useImageContext();
   const [enhanceFactor, setEnhanceFactor] = useState<number>(1.0);
 
-  const handleStartTask = () => {
+  const handleStartTask = async () => {
     if (!selectedFile) {
       alert('Please select a file.');
       return;
     }
 
     const taskId = generateUUID();
-    const newTask = {
+    const newTask: Task = {
       taskId,
       operation: 'Enhance',
       status: 'Pending',
+      progress: 0,
       enhanceFactor,
-      image: selectedFile,
     };
     addTask(newTask);
-    alert(`Enhance task started with ID: ${taskId}`);
+
+    try {
+      const result = await startTask(newTask, selectedFile);
+      // Update the task with the result if necessary
+      alert(result)
+    } catch (error) {
+      alert(error)
+    }
   };
 
   return (

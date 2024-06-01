@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { useImageContext } from '../../context/ImageContext';
+import { Task, useImageContext } from '../../context/ImageContext';
 import { generateUUID } from '../../services/utils'; // Adjust the path as necessary
+import { startTask } from '../../services/api'; // Import the startTask function
 
 const Resize: React.FC = () => {
-  const { addTask, selectedFile } = useImageContext();
+  const { addTask, selectedFile, updateTaskStatus } = useImageContext();
   const [resizeHeight, setResizeHeight] = useState<number>(0);
   const [resizeWidth, setResizeWidth] = useState<number>(0);
 
-  const handleStartTask = () => {
+  const handleStartTask = async () => {
     if (resizeHeight <= 0 || resizeWidth <= 0) {
       alert('Please enter valid height and width.');
       return;
@@ -18,16 +19,23 @@ const Resize: React.FC = () => {
     }
 
     const taskId = generateUUID();
-    const newTask = {
+    const newTask: Task = {
       taskId,
       operation: 'Resize',
       status: 'Pending',
+      progress: 0,
       resizeHeight,
       resizeWidth,
-      image: selectedFile,
     };
     addTask(newTask);
-    alert(`Resize task started with ID: ${taskId}`);
+
+    try {
+      const result = await startTask(newTask, selectedFile);
+      updateTaskStatus(taskId, 'Completed');
+      // Update the task with the result if necessary
+    } catch (error) {
+      updateTaskStatus(taskId, 'Failed');
+    }
   };
 
   return (

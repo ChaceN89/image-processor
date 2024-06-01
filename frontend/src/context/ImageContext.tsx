@@ -1,11 +1,11 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 // Define the interface for a task
-interface Task {
+export interface Task {
     taskId: string; // the uuid for the task 
     operation: string; // the string representing the operation 
     status: string; // the status of this task
-    image: File
+    progress:number; //the immediate progress of the task 
 
     // components specific to the operation type some can be null
     resizeHeight?: number; // Optional field for the resize endpoint
@@ -14,6 +14,8 @@ interface Task {
     enhanceFactor?: number; // Optional field for the enhance endpoint
     rotateDegrees?: number; // Optional field for the rotate endpoint
     flipDirection?: string; // Optional field for the flip endpoint
+
+    // the url to the altered image for display and download
     alteredImageUrl?: string; // URL of the altered image to download and display 
 }
 
