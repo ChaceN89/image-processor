@@ -1,9 +1,5 @@
 {
     "name": "frontend",
     "start": "npx serve -s build -l $PORT",
-    "build": "npm install && npm run build",
-    "env": {
-      "REACT_APP_API_URL": "https://triumphant-clarity-production.up.railway.app/api"
-    }
-  }
-  
+    "build": "npm install && npm run build"
+}
