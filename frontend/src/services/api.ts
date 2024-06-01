@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Task } from '../context/ImageContext';
 
 const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
+console.log("the apiURL inclusing the /api part is ", apiUrl)
 
 // Create an axios instance with a base URL
 const api = axios.create({
