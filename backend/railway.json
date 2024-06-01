@@ -1,10 +1,11 @@
 {
     "name": "backend",
     "start": "uvicorn main:app --host 0.0.0.0 --port $PORT",
-    "build": "pip install -r requirements.txt",
+    "build": {
+        "command": "pip install -r requirements.txt"
+    },
     "env": {
-      "HOST": "http://localhost:3000",
-      "API": "https://triumphant-clarity-production.up.railway.app/"
+        "HOST": "http://localhost:3000",
+        "API": "https://triumphant-clarity-production.up.railway.app/"
     }
 }
-  
