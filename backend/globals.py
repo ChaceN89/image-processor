@@ -1,3 +1,11 @@
 # the host(frontend) and the location of this api/server
-host = "http://localhost:3000"
-api = "http://localhost:8000"
+import os
+# for enviroment variables
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Read environment variables with fallback values for local development
+host = os.getenv('HOST', 'http://localhost:3000')
+api = os.getenv('API', 'http://localhost:8000')

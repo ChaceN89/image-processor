@@ -17,17 +17,17 @@ def set_initial_status(task_type, task_id, SAVE_DIR):
     tasks_status[task_id]["task_name"] = task_type
     tasks_status[task_id]["progress"] = 0
 
-
-    time.sleep(1)  # Simulate work being done
-    tasks_status[task_id]["progress"] = 15
-    time.sleep(1)  # Simulate work being done
+    sleep_time = random.uniform(0.1, 1)
+    time.sleep(sleep_time)  # Simulate work being done
+    tasks_status[task_id]["progress"] = 12
+    time.sleep(sleep_time)  # Simulate work being done
     tasks_status[task_id]["progress"] = 25
 
     return save_path, new_filename, og_filename
 
 
 def set_mid_status(task_id):
-    sleep_time = random.uniform(0.5, 1.5)
+    sleep_time = random.uniform(0.1, 1)
 
     time.sleep(sleep_time)  # Simulate work being done
     tasks_status[task_id]["progress"] = 40
@@ -40,12 +40,12 @@ def set_mid_status(task_id):
 
 
 def set_end_status(task_id):
-    sleep_time = random.uniform(0.1, 1.5)
+    sleep_time = random.uniform(0.1, 1)
 
     time.sleep(sleep_time)  # Simulate work being done
     tasks_status[task_id]["progress"] = 75
     time.sleep(sleep_time)  # Simulate work being done
-    tasks_status[task_id]["progress"] = 90
+    tasks_status[task_id]["progress"] = 92
     
     # Update task status to completed
     tasks_status[task_id]["status"] = "Completed"
