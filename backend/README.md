@@ -1,6 +1,10 @@
 
 RUN THE APPLICATION 
 
+avtivate virtual env 
+source env/bin/activate
+
+
 uvicorn main:app --reload
 
 
