@@ -1,5 +1,5 @@
 {
     "name": "frontend",
     "start": "npx serve -s build -l $PORT",
-    "build": "npm install && npm run build"
+    "buildCommand": "npm install && npm run build"
 }
