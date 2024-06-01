@@ -1,36 +1,18 @@
 import React, { useState } from 'react';
-import { Task, useImageContext } from '../../context/ImageContext';
-import { generateUUID } from '../../services/utils'; // Adjust the path as necessary
-import { startTask } from '../../services/api'; // Import the startTask function
+import { useTask } from '../../services/useTask'; // Adjust the path as necessary
 
 const Flip: React.FC = () => {
-  const { addTask, selectedFile, updateTaskStatus } = useImageContext();
+  const { handleStartTask } = useTask();
   const [flipDirection, setFlipDirection] = useState<string>('horizontal');
 
   const flipOptions = ['horizontal', 'vertical']; // Array for flip directions
 
-  const handleStartTask = async () => {
-    if (!selectedFile) {
-      alert('Please select a file.');
-      return;
-    }
-
-    const taskId = generateUUID();
-    const newTask: Task = {
-      taskId,
-      operation: 'Flip',
-      status: 'Pending',
-      progress: 0,
-      flipDirection,
-    };
-    addTask(newTask);
-
+  const startFlipTask = async () => {
     try {
-      const result = await startTask(newTask, selectedFile);
-      updateTaskStatus(taskId, 'Completed');
-      // Update the task with the result if necessary
+      const result = await handleStartTask('Flip', { flipDirection });
+      alert(result.status);
     } catch (error) {
-      updateTaskStatus(taskId, 'Failed');
+      alert(error);
     }
   };
 
@@ -51,7 +33,7 @@ const Flip: React.FC = () => {
           <label htmlFor={option}>{option.charAt(0).toUpperCase() + option.slice(1)}</label>
         </div>
       ))}
-      <button onClick={handleStartTask}>Start Flip Task</button>
+      <button onClick={startFlipTask}>Start Flip Task</button>
     </div>
   );
 };

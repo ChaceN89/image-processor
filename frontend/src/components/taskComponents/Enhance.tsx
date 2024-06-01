@@ -1,34 +1,16 @@
 import React, { useState } from 'react';
-import { Task, useImageContext } from '../../context/ImageContext';
-import { generateUUID } from '../../services/utils'; // Adjust the path as necessary
-import { startTask } from '../../services/api'; // Import the startTask function
+import { useTask } from '../../services/useTask'; // Adjust the path as necessary
 
 const Enhance: React.FC = () => {
-  const { addTask, selectedFile, updateTaskStatus } = useImageContext();
+  const { handleStartTask } = useTask();
   const [enhanceFactor, setEnhanceFactor] = useState<number>(1.0);
 
-  const handleStartTask = async () => {
-    if (!selectedFile) {
-      alert('Please select a file.');
-      return;
-    }
-
-    const taskId = generateUUID();
-    const newTask: Task = {
-      taskId,
-      operation: 'Enhance',
-      status: 'Pending',
-      progress: 0,
-      enhanceFactor,
-    };
-    addTask(newTask);
-
+  const startEnhanceTask = async () => {
     try {
-      const result = await startTask(newTask, selectedFile);
-      // Update the task with the result if necessary
-      alert(result)
+      const result = await handleStartTask('Enhance', { enhanceFactor });
+      alert(result.status);
     } catch (error) {
-      alert(error)
+      alert(error);
     }
   };
 
@@ -47,7 +29,7 @@ const Enhance: React.FC = () => {
         />
         <span>{enhanceFactor}</span>
       </label>
-      <button onClick={handleStartTask}>Start Enhance Task</button>
+      <button onClick={startEnhanceTask}>Start Enhance Task</button>
     </div>
   );
 };

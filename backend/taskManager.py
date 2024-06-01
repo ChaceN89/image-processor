@@ -9,8 +9,8 @@ executor = ThreadPoolExecutor(max_workers=4)
 tasks_status: Dict[str, Dict[str, str]] = {}
 
 # for the max storage of tasks
-MAX_TASKS = 3
-TASK_EXPIRY_MINUTES = 1
+MAX_TASKS = 50
+TASK_EXPIRY_MINUTES = 5
 
 # Define the directories
 RESIZED_DIR = Path("images/resizedImages")

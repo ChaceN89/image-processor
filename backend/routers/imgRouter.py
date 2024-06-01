@@ -48,6 +48,12 @@ async def get_task_status(task_id: str):
     return task
 
 
+# view the current task list with all tasks stored
+@router.get("/task-list/")
+async def get_task_list():
+    return tasks_status
+
+
 # route that deletes the task from the list and remvoes associated images
 @router.delete("/cancel-task/{task_id}")
 async def cancel_task_route(task_id: str):
@@ -56,10 +62,11 @@ async def cancel_task_route(task_id: str):
         raise HTTPException(status_code=404, detail="Task not found")
     return result
 
-
-# view the current task list with all tasks stored
-@router.get("/task-list/")
-async def get_task_list():
-    return tasks_status
+# route to delete all tasks from the task list
+@router.delete("/task-list/")
+async def delete_task_list():
+    global tasks_status
+    tasks_status.clear()
+    return {"status": "Tasks Reset"}
 
 

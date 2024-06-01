@@ -1,34 +1,16 @@
 import React, { useState } from 'react';
-import { Task, useImageContext } from '../../context/ImageContext';
-import { generateUUID } from '../../services/utils'; // Adjust the path as necessary
-import { startTask } from '../../services/api'; // Import the startTask function
+import { useTask } from '../../services/useTask'; // Adjust the path as necessary
 
 const Rotate: React.FC = () => {
-  const { addTask, selectedFile, updateTaskStatus } = useImageContext();
+  const { handleStartTask } = useTask();
   const [rotateDegrees, setRotateDegrees] = useState<number>(0);
 
-  const handleStartTask = async () => {
-    if (!selectedFile) {
-      alert('Please select a file.');
-      return;
-    }
-
-    const taskId = generateUUID();
-    const newTask: Task = {
-      taskId,
-      operation: 'Rotate',
-      status: 'Pending',
-      progress: 0,
-      rotateDegrees,
-    };
-    addTask(newTask);
-
+  const startRotateTask = async () => {
     try {
-      const result = await startTask(newTask, selectedFile);
-      updateTaskStatus(taskId, 'Completed');
-      // Update the task with the result if necessary
+      const result = await handleStartTask('Rotate', { rotateDegrees });
+      alert(result.status);
     } catch (error) {
-      updateTaskStatus(taskId, 'Failed');
+      alert(error);
     }
   };
 
@@ -47,7 +29,7 @@ const Rotate: React.FC = () => {
         />
       </label>
       <br />
-      <button onClick={handleStartTask}>Start Rotate Task</button>
+      <button onClick={startRotateTask}>Start Rotate Task</button>
     </div>
   );
 };

@@ -13,18 +13,18 @@ export const startTask = async (task: Task, selectedFile: File) => {
     const formData = new FormData();
     formData.append('file', selectedFile);
 
-    // Add task details to formData if necessary
-    formData.append('taskId', task.taskId);
-    formData.append('operation', task.operation);
-    if (task.resizeHeight !== undefined) formData.append('resizeHeight', task.resizeHeight.toString());
-    if (task.resizeWidth !== undefined) formData.append('resizeWidth', task.resizeWidth.toString());
-    if (task.convertTo !== undefined) formData.append('convertTo', task.convertTo);
-    if (task.enhanceFactor !== undefined) formData.append('enhanceFactor', task.enhanceFactor.toString());
-    if (task.rotateDegrees !== undefined) formData.append('rotateDegrees', task.rotateDegrees.toString());
-    if (task.flipDirection !== undefined) formData.append('flipDirection', task.flipDirection);
+    // Construct the query parameters
+    const params = new URLSearchParams();
+    params.append('operation', task.operation);
+    if (task.resizeHeight !== undefined) params.append('resizeHeight', task.resizeHeight.toString());
+    if (task.resizeWidth !== undefined) params.append('resizeWidth', task.resizeWidth.toString());
+    if (task.convertTo !== undefined) params.append('convertTo', task.convertTo);
+    if (task.enhanceFactor !== undefined) params.append('enhanceFactor', task.enhanceFactor.toString());
+    if (task.rotateDegrees !== undefined) params.append('rotateDegrees', task.rotateDegrees.toString());
+    if (task.flipDirection !== undefined) params.append('flipDirection', task.flipDirection);
 
     // Send the task to the backend
-    const response = await api.post(`/img/alter-img/${task.taskId}`, formData, { 
+    const response = await api.post(`/img/alter-img/${task.taskId}?${params.toString()}`, formData, { 
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -37,7 +37,6 @@ export const startTask = async (task: Task, selectedFile: File) => {
     throw error;
   }
 };
-
 // Function to get the status of a task
 export const getTaskStatus = async (taskId: string) => {
   try {
