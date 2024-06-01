@@ -1,11 +1,10 @@
+
 {
-    "name": "backend",
-    "start": "uvicorn main:app --host 0.0.0.0 --port $PORT",
+    "$schema": "https://railway.app/railway.schema.json",
     "build": {
-        "command": "pip install -r requirements.txt"
+        "builder": "NIXPACKS"
     },
-    "env": {
-        "HOST": "http://localhost:3000",
-        "API": "https://triumphant-clarity-production.up.railway.app/"
+    "deploy": {
+        "startCommand": "uvicorn main:app --host 0.0.0.0 --port $PORT"
     }
 }
