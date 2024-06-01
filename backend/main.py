@@ -33,6 +33,9 @@ app.include_router(imgRouter.router, prefix="/api")  # Include imgRouter with /a
 # Mount the various image folders within the images folder
 app.mount("/resizedImages", StaticFiles(directory="images/resizedImages"), name="resizedImages")
 app.mount("/enhancedImages", StaticFiles(directory="images/enhancedImages"), name="enhancedImages")
+app.mount("/flippedImages", StaticFiles(directory="images/flippedImages"), name="flippedImages")
+app.mount("/rotatedImages", StaticFiles(directory="images/rotatedImages"), name="rotatedImages")
+app.mount("/convertedImages", StaticFiles(directory="images/convertedImages"), name="convertedImages")
 
 # start the application
 if __name__ == "__main__":

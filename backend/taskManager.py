@@ -37,6 +37,9 @@ def start_task(task_id, task_name, filename, task_function):
     # check if there are any too old tasks that need to be deleted becuae they aren't useful anymore
     # clear old tasks before creating a new one
     check_old_tasks()
+
+    # delete files that aren't related to a task and havent been deleted yet - this is a fail safe  
+    delete_unassociated_files()
     
     # Start the task using the task function
     future = executor.submit(task_function)
@@ -108,3 +111,52 @@ def delete_associated_file(task_id, filename, task_name):
             file_path.unlink()  # Delete the file
     except Exception as e:
         print(f"Error deleting file {file_path}: {e}")
+
+
+# Function to cancel a specific task and delete associated files
+def cancel_task(task_id: str):
+    task = tasks_status.get(task_id)
+    if task:
+        # Delete associated files
+        delete_associated_file(task_id, task["original_filename"], task["task_name"])
+        # Remove task from tasks_status
+        del tasks_status[task_id]
+        return {"status": "Task cancelled", "task_id": task_id}
+    else:
+        return {"status": "Task not found", "task_id": task_id}
+    
+
+# Function to delete images not associated with any task
+def delete_unassociated_files():
+    all_files = {
+        "Resize": list(RESIZED_DIR.glob("*")),
+        "Enhance": list(ENHANCED_DIR.glob("*")),
+        "Rotate": list(ROTATED_DIR.glob("*")),
+        "Flip": list(FLIPPED_DIR.glob("*")),
+        "Convert": list(CONVERTED_DIR.glob("*"))
+    }
+    
+    task_files = {
+        "Resize": set(),
+        "Enhance": set(),
+        "Rotate": set(),
+        "Flip": set(),
+        "Convert": set()
+    }
+    
+    # Collect all task-related files
+    for task_id, task in tasks_status.items():
+        task_name = task["task_name"]
+        filename = task["original_filename"]
+        if task_name in task_files:
+            task_files[task_name].add(f"{task_id}_{filename}")
+    
+    # Delete unassociated files
+    for task_name, files in all_files.items():
+        for file_path in files:
+            if file_path.name not in task_files[task_name]:
+                try:
+                    file_path.unlink()  # Delete the file
+                    print(f"Deleted unassociated file {file_path}")
+                except Exception as e:
+                    print(f"Error deleting file {file_path}: {e}")
