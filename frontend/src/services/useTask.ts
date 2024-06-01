@@ -24,7 +24,7 @@ export const useTask = () => {
 
     try {
       const result = await startTask(newTask, selectedFile);
-      updateTaskStatus(taskId, 'Completed');
+      updateTaskStatus(taskId, 'In Progress');
       return result;
     } catch (error) {
       updateTaskStatus(taskId, 'Failed');

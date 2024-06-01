@@ -28,7 +28,7 @@ const Results: React.FC = () => {
           <CancelTask taskId={task.taskId} />
           <div>{task.progress}</div>
           <div>{task.status}</div>
-          {task.status === 'Completed' && (
+          {task.status === 'Completed' && task.alteredImageUrl && (
             <div>
               <h4>Task Completed: {task.taskId}</h4>
               <img

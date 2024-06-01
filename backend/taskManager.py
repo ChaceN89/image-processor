@@ -26,7 +26,7 @@ def start_task(task_id, task_name, filename, task_function):
 
     # Initialize the task with status "started"
     initial_task_info = {
-        "status": "Started",
+        "status": "Pending",
         "time_started": current_time.strftime("%Y-%m-%d %H:%M:%S"),
         "original_filename": filename,
         "task_name": task_name,

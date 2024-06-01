@@ -46,6 +46,7 @@ export const ImageProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   };
 
   const updateTaskStatus = (taskId: string, status: string, additionalInfo?: Partial<Task>) => {
+    console.log(`Updating task ${taskId} to status: ${status}`);
     setTasks((prevTasks) =>
       prevTasks.map((task) =>
         task.taskId === taskId ? { ...task, status, ...additionalInfo } : task

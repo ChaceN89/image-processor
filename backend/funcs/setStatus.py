@@ -1,6 +1,6 @@
 from taskManager import tasks_status
 import time
-
+import random
 
 def set_initial_status(task_type, task_id, SAVE_DIR):
 
@@ -19,21 +19,33 @@ def set_initial_status(task_type, task_id, SAVE_DIR):
 
 
     time.sleep(1)  # Simulate work being done
+    tasks_status[task_id]["progress"] = 15
+    time.sleep(1)  # Simulate work being done
     tasks_status[task_id]["progress"] = 25
 
     return save_path, new_filename, og_filename
 
 
 def set_mid_status(task_id):
-    time.sleep(1)  # Simulate work being done
+    sleep_time = random.uniform(0.5, 1.5)
+
+    time.sleep(sleep_time)  # Simulate work being done
+    tasks_status[task_id]["progress"] = 40
+
+    time.sleep(sleep_time)  # Simulate work being done
     tasks_status[task_id]["progress"] = 50
-    time.sleep(1)  # Simulate work being done
+
+    time.sleep(sleep_time)  # Simulate work being done
+    tasks_status[task_id]["progress"] = 60
 
 
 def set_end_status(task_id):
-    time.sleep(1)  # Simulate work being done
+    sleep_time = random.uniform(0.1, 1.5)
+
+    time.sleep(sleep_time)  # Simulate work being done
     tasks_status[task_id]["progress"] = 75
-    time.sleep(1)  # Simulate work being done
+    time.sleep(sleep_time)  # Simulate work being done
+    tasks_status[task_id]["progress"] = 90
     
     # Update task status to completed
     tasks_status[task_id]["status"] = "Completed"
