@@ -12,12 +12,12 @@ const CancelTask: React.FC<CancelTaskProps> = ({ taskId }) => {
 
   const handleCancelTask = async () => {
     try {
-      const result = await cancelTask(taskId);
-    //   alert(result.status);
-      setTasks(tasks.filter(task => task.taskId !== taskId));
+      await cancelTask(taskId);
     } catch (error) {
-      console.error('Error canceling task:', error);
+        console.error('Error canceling task:', error);
     }
+    // remove the task rom the frontend if baclend call fails or succeds
+    setTasks(tasks.filter(task => task.taskId !== taskId));
   };
 
   return (

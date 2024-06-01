@@ -7,6 +7,9 @@ export interface Task {
   status: string; // the status of this task
   progress: number; // the immediate progress of the task 
 
+  // file info upon return 
+  filename?: string; 
+
   // components specific to the operation type some can be null
   resizeHeight?: number; // Optional field for the resize endpoint
   resizeWidth?: number;  // Optional field for the resize endpoint

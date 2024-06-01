@@ -23,7 +23,8 @@ const FetchTask: React.FC<FetchTaskProps> = ({ taskId }) => {
             updateTaskStatus(taskId, 'Completed', {
               progress: 100,
               alteredImageUrl: status.result.file_url,
-              timeEnded: status.time_ended
+              timeEnded: status.time_ended,
+              filename: "altered_"+status.task_name+"_"+status.original_filename
             });
           }
         } else {

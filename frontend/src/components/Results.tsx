@@ -20,6 +20,7 @@ const Results: React.FC = () => {
 
   return (
     <div>
+      <div>Number of current tasks: { tasks.length}</div>
       <hr />
       {tasks.map((task, index) => (
         <div key={index}>
@@ -29,19 +30,19 @@ const Results: React.FC = () => {
           <div>{task.status}</div>
           {task.status === 'Completed' && (
             <div>
-              <h2>Task Completed: {task.taskId}</h2>
+              <h4>Task Completed: {task.taskId}</h4>
               <img
                 src={task.alteredImageUrl}
                 alt={`Result for ${task.taskId}`}
                 style={{ maxWidth: '30%', height: '40%', cursor: 'pointer' }}
-                onClick={() => handleImageClick(task.alteredImageUrl!, ` ${task.operation} File`)}
+                onClick={() => handleImageClick(task.alteredImageUrl!, task.filename || "")}
               />
               <p>Time Ended: {task.timeEnded}</p>
             </div>
           )}
+          <hr />
         </div>
       ))}
-      <hr />
       <DisplayTasks />
     </div>
   );
