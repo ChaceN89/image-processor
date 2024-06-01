@@ -32,5 +32,5 @@ def rotate(task_id, file_content: bytes, schema):
 
     return {
         "msg": f"{og_filename} successfully rotated.",
-        "file_url": f"/{api}/rotatedImages/{new_filename}"
+        "file_url": f"{api}/rotatedImages/{new_filename}"
     }

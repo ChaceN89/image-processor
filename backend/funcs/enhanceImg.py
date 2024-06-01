@@ -34,5 +34,5 @@ def enhance(task_id, file_content: bytes, schema):
 
     return {
         "msg": f"{og_filename} successfully enhanced.",
-        "file_url": f"/{api}/enhancedImages/{new_filename}"
+        "file_url": f"{api}/enhancedImages/{new_filename}"
     }

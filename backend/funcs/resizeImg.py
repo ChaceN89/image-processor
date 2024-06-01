@@ -32,5 +32,5 @@ def resize(task_id, file_content: bytes, schema):
 
     return {
         "msg": f"{og_filename} successfully resized.",
-        "file_url": f"/{api}/resizedImages/{new_filename}"
+        "file_url": f"{api}/resizedImages/{new_filename}"
     }

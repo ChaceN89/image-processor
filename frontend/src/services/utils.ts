@@ -5,14 +5,10 @@ export const generateUUID = (): string => {
   return uuidv4();
 };
 
-// Add more utility functions here
-
-// Example utility function to format a date
-export const formatDate = (date: Date): string => {
-  return date.toISOString().split('T')[0];
+// src/services/utils.ts
+export const urlToFile = async (url: string, filename: string): Promise<File> => {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  return new File([blob], filename, { type: blob.type });
 };
 
-// Example utility function to capitalize a string
-export const capitalize = (str: string): string => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-};

@@ -37,5 +37,5 @@ def flip(task_id, file_content: bytes, schema):
 
     return {
         "msg": f"{og_filename} successfully flipped.",
-        "file_url": f"/{api}/flippedImages/{new_filename}"
+        "file_url": f"{api}/flippedImages/{new_filename}"
     }

@@ -2,30 +2,43 @@ import React from 'react';
 import DisplayTasks from './subcomponents/DisplayTasks';
 import { useImageContext } from '../context/ImageContext';
 import FetchTask from './subcomponents/FetchTask';
-
+import { urlToFile } from '../services/utils'; // Import the utility function
 
 
 const Results: React.FC = () => {
+  const { tasks, setSelectedFile } = useImageContext();
 
-    const { tasks } = useImageContext();
+  const handleImageClick = async (url: string, filename: string) => {
+    try {
+      const file = await urlToFile(url, filename);
+      setSelectedFile(file);
+    } catch (error) {
+      console.error('Error converting image URL to file:', error);
+    }
+  };
 
-    return (
-        <div>
-            {tasks.map((obj, index) => (
-                <>
-                <pre key={index}>{JSON.stringify(obj, null, 2)}</pre>
-                <FetchTask/>
-                </>
-            ))}
-            <h1>Results</h1>
-            <p>displays all the results</p>
-            <p>will have more components that constantly look for resutls  </p>
-            <p> will read a list of frontend api calls that is an array storing the task ids</p>
-            <p>this component will go through the list of task ids can keep asking the backend if they are done yet</p>
-            <DisplayTasks/>
+  return (
+    <div>
+      {tasks.map((task, index) => (
+        <div key={index}>
+          <FetchTask taskId={task.taskId} />
+          {task.status === 'Completed' && (
+            <div>
+              <h2>Task Completed: {task.taskId}</h2>
+              <img
+                src={task.alteredImageUrl}
+                alt={`Result for ${task.taskId}`}
+                style={{ maxWidth: '30%', height: '40%', cursor: 'pointer' }}
+                onClick={() => handleImageClick(task.alteredImageUrl!, "filename")}
+              />
+              <p>Time Ended: {task.timeEnded}</p>
+            </div>
+          )}
         </div>
-    );
+      ))}
+      <DisplayTasks />
+    </div>
+  );
 };
 
 export default Results;
-

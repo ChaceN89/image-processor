@@ -31,5 +31,5 @@ def convert(task_id, file_content: bytes, schema):
 
     return {
         "msg": f"{og_filename} successfully converted to {convertTo}.",
-        "file_url": f"/{api}/convertedImages/{new_filename}"
+        "file_url": f"{api}/convertedImages/{new_filename}"
     }

@@ -7,6 +7,7 @@ const api = axios.create({
   baseURL: 'http://localhost:8000/api', // Adjust the base URL as needed
 });
 
+
 // Function to start a task
 export const startTask = async (task: Task, selectedFile: File) => {
   try {
@@ -37,6 +38,8 @@ export const startTask = async (task: Task, selectedFile: File) => {
     throw error;
   }
 };
+
+
 // Function to get the status of a task
 export const getTaskStatus = async (taskId: string) => {
   try {
@@ -47,6 +50,7 @@ export const getTaskStatus = async (taskId: string) => {
     throw error;
   }
 };
+
 
 // Function to cancel a task
 export const cancelTask = async (taskId: string) => {
