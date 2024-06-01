@@ -5,7 +5,7 @@ from fastapi import HTTPException
 # from functions.imgFuncs import resize
 # from backend.funcs.resizeImage import resize, enhance, convert, rotate, flip
 from funcs import resizeImg, enhanceImg, convertImg, flipImg, rotateImg
-from taskManager import start_task, tasks_status, cancel_task
+from taskManager import start_task, tasks_status, cancel_task, get_images
 
 # set up the router for image processing with prefix and tags(for swagger UI)
 router = APIRouter(
@@ -62,6 +62,7 @@ async def cancel_task_route(task_id: str):
         raise HTTPException(status_code=404, detail="Task not found")
     return result
 
+
 # route to delete all tasks from the task list
 @router.delete("/task-list/")
 async def delete_task_list():
@@ -70,3 +71,7 @@ async def delete_task_list():
     return {"status": "Tasks Reset"}
 
 
+@router.get("/all-images/")
+async def get_all_images():
+    return get_images()
+    image_files = []

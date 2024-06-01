@@ -160,3 +160,11 @@ def delete_unassociated_files():
                     print(f"Deleted unassociated file {file_path}")
                 except Exception as e:
                     print(f"Error deleting file {file_path}: {e}")
+
+
+def get_images():
+    image_files = []
+    for directory in [RESIZED_DIR, ENHANCED_DIR, ROTATED_DIR, FLIPPED_DIR, CONVERTED_DIR]:
+        if directory.exists():
+            image_files.extend([str(file) for file in directory.glob("*.*") if file.is_file()])
+    return image_files 
