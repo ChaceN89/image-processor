@@ -7,11 +7,19 @@ interface FetchTaskProps {
 }
 
 const FetchTask: React.FC<FetchTaskProps> = ({ taskId }) => {
-  const { updateTaskStatus } = useImageContext();
+  const { updateTaskStatus, getTaskById } = useImageContext();
 
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
+        const currStatus = getTaskById(taskId);
+
+        // Check if the current status is already completed or failed
+        if (currStatus?.status === 'Completed' || currStatus?.status === 'Failed') {
+          clearInterval(interval); // Stop polling if the task is already completed or failed
+          return;
+        }
+
         const status = await getTaskStatus(taskId);
         updateTaskStatus(taskId, status.status);
 
@@ -24,7 +32,7 @@ const FetchTask: React.FC<FetchTaskProps> = ({ taskId }) => {
               progress: 100,
               alteredImageUrl: status.result.file_url,
               timeEnded: status.time_ended,
-              filename: "altered_"+status.task_name+"_"+status.original_filename
+              filename: "altered_" + status.task_name + "_" + status.original_filename
             });
           }
         } else {
@@ -40,7 +48,7 @@ const FetchTask: React.FC<FetchTaskProps> = ({ taskId }) => {
     }, 1000);
 
     return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, [taskId, updateTaskStatus]);
+  }, [taskId, updateTaskStatus, getTaskById]);
 
   return null;
 };

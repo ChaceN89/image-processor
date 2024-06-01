@@ -31,10 +31,11 @@ interface ImageContextProps {
   addTask: (task: Task) => void;
   updateTaskStatus: (taskId: string, status: string, additionalInfo?: Partial<Task>) => void;
   setTasks: (tasks: Task[]) => void; // Add setTasks to the interface
+  getTaskById: (taskId: string) => Task | undefined; // Add getTaskById to the interface
 }
   
-  // Create the context
-  const ImageContext = createContext<ImageContextProps | undefined>(undefined);
+// Create the context
+const ImageContext = createContext<ImageContextProps | undefined>(undefined);
   
 // Provider component
 export const ImageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
@@ -53,14 +54,17 @@ export const ImageProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     );
   };
 
+  const getTaskById = (taskId: string) => {
+    return tasks.find(task => task.taskId === taskId);
+  };
+
   return (
-    <ImageContext.Provider value={{ selectedFile, setSelectedFile, tasks, addTask, updateTaskStatus, setTasks }}>
+    <ImageContext.Provider value={{ selectedFile, setSelectedFile, tasks, addTask, updateTaskStatus, setTasks, getTaskById }}>
       {children}
     </ImageContext.Provider>
   );
 };
 
-  
 // Custom hook to use the ImageContext
 export const useImageContext = () => {
   const context = useContext(ImageContext);
