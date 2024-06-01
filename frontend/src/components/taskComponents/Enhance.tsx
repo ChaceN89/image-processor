@@ -7,7 +7,7 @@ const Enhance: React.FC = () => {
 
   const startEnhanceTask = async () => {
     try {
-      const result = await handleStartTask('Enhance', { enhanceFactor });
+      await handleStartTask('Enhance', { enhanceFactor });
       // alert(result.status);
     } catch (error) {
       alert(error);

@@ -14,7 +14,7 @@ const Convert: React.FC = () => {
     }
 
     try {
-      const result = await handleStartTask('Convert', { convertTo: selectedFormat });
+      await handleStartTask('Convert', { convertTo: selectedFormat });
       // alert(result.status);
     } catch (error) {
       alert(error);

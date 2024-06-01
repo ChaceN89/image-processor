@@ -13,8 +13,7 @@ const Resize: React.FC = () => {
     }
 
     try {
-      const result = await handleStartTask('Resize', { resizeHeight, resizeWidth });
-      // alert(result.status);
+      await handleStartTask('Resize', { resizeHeight, resizeWidth });
     } catch (error) {
       alert(error);
     }
