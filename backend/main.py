@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import imgRouter
 from fastapi.staticfiles import StaticFiles # for mounting files
 from pathlib import Path
-from globals import host # the host running the frontend
+from globals import client # the host running the frontend
 
 # import the folders to store images 
 from taskManager import  RESIZED_DIR, ENHANCED_DIR, ROTATED_DIR, FLIPPED_DIR, CONVERTED_DIR
@@ -21,7 +21,7 @@ CONVERTED_DIR.mkdir(parents=True, exist_ok=True)
 # set up middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[host],  # Replace with your frontend's URL
+    allow_origins=[client],  # Replace with your frontend's URL
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],

@@ -7,5 +7,5 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Read environment variables with fallback values for local development
-host = os.getenv('HOST', 'http://localhost:3000')
+client = os.getenv('CLIENT', 'http://localhost:3000')
 api = os.getenv('API', 'http://localhost:8000')
