@@ -16,14 +16,14 @@ COPY . .
 # Build the React app
 RUN npm run build
 
-# Use a lightweight web server to serve the build output
+# Install 'serve' to serve the build
 RUN npm install -g serve
 
-# Use the PORT environment variable provided by Railway, default to 3000 if not set
-ENV PORT=${PORT:-3000}
+# Set environment variable for port (default to 3000)
+ENV PORT 3000
 
-# Command to run the application
-CMD ["serve", "-s", "build", "-l", "$PORT"]
-
-# Expose the port (optional, but good for documentation)
+# Expose the port (optional, for documentation purposes)
 EXPOSE $PORT
+
+# Command to run the application, ensure PORT is passed correctly
+CMD ["sh", "-c", "serve -s build -l $PORT"]
