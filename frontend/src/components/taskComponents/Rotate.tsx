@@ -8,7 +8,7 @@ const Rotate: React.FC = () => {
   const startRotateTask = async () => {
     try {
       const result = await handleStartTask('Rotate', { rotateDegrees });
-      alert(result.status);
+      // alert(result.status);
     } catch (error) {
       alert(error);
     }

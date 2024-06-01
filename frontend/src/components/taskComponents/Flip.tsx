@@ -10,7 +10,7 @@ const Flip: React.FC = () => {
   const startFlipTask = async () => {
     try {
       const result = await handleStartTask('Flip', { flipDirection });
-      alert(result.status);
+      // alert(result.status);
     } catch (error) {
       alert(error);
     }

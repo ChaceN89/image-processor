@@ -1,8 +1,9 @@
 import React from 'react';
 import DisplayTasks from './subcomponents/DisplayTasks';
 import { useImageContext } from '../context/ImageContext';
-import FetchTask from './subcomponents/FetchTask';
 import { urlToFile } from '../services/utils'; // Import the utility function
+import FetchTask from './subcomponents/FetchTask';
+import CancelTask from './subcomponents/CancelTask';
 
 
 const Results: React.FC = () => {
@@ -19,9 +20,13 @@ const Results: React.FC = () => {
 
   return (
     <div>
+      <hr />
       {tasks.map((task, index) => (
         <div key={index}>
           <FetchTask taskId={task.taskId} />
+          <CancelTask taskId={task.taskId} />
+          <div>{task.progress}</div>
+          <div>{task.status}</div>
           {task.status === 'Completed' && (
             <div>
               <h2>Task Completed: {task.taskId}</h2>
@@ -29,13 +34,14 @@ const Results: React.FC = () => {
                 src={task.alteredImageUrl}
                 alt={`Result for ${task.taskId}`}
                 style={{ maxWidth: '30%', height: '40%', cursor: 'pointer' }}
-                onClick={() => handleImageClick(task.alteredImageUrl!, "filename")}
+                onClick={() => handleImageClick(task.alteredImageUrl!, ` ${task.operation} File`)}
               />
               <p>Time Ended: {task.timeEnded}</p>
             </div>
           )}
         </div>
       ))}
+      <hr />
       <DisplayTasks />
     </div>
   );
