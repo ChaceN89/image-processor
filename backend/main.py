@@ -38,6 +38,6 @@ app.mount("/rotatedImages", StaticFiles(directory="images/rotatedImages"), name=
 app.mount("/convertedImages", StaticFiles(directory="images/convertedImages"), name="convertedImages")
 
 # # start the application
-# if __name__ == "__main__":
-#     import uvicorn
-#     uvicorn.run(app, host="0.0.0.0", port=8000)
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
