@@ -5,6 +5,7 @@ import FetchTask from './subcomponents/FetchTask';
 import CancelTask from './subcomponents/CancelTask';
 import DownloadImage from './subcomponents/DownloadImage';
 import { formatDate } from '../services/utils';
+import Loader from './subcomponents/Loader';
 
 const Results: React.FC = () => {
   const { tasks, setSelectedFile } = useImageContext();
@@ -19,38 +20,38 @@ const Results: React.FC = () => {
   };
 
   return (
-    <div className="results">
-      {/* Section above the horizontal scroll box with the tasks */}
-      <div>Number of current tasks: {tasks.length}</div>
-      
-      <div className="tasks-container">
+    <div className='right-bottom'>
+      <h4>Number of Current Tasks: {tasks.length} </h4>
+      <div className="scrolling-wrapper">
         {tasks.map((task, index) => (
-          <div className='taskBox' key={index}>
+          <div className="card">
             <FetchTask taskId={task.taskId} />
             {task.status === 'Completed' && task.alteredImageUrl ? (
-              <div className="task-completed">
+              <>
                 <img
+                  className='card-image'
+                  title='Click to Edit this Image'
                   src={task.alteredImageUrl}
                   alt={`Result for ${task.taskId}`}
                   onClick={() => handleImageClick(task.alteredImageUrl!, task.filename || "")}
                 />
-                <CancelTask taskId={task.taskId} />
-                <div className='photoInfo'>
+                <div>
                   <p>{ formatDate(task.timeEnded)}</p>
                   <DownloadImage taskId={task.taskId} />
                 </div>
-              </div>
-            ) : (
+                <div>{task.operation} Image</div>
+              </>
+            ):(
               <>
-                <div>{task.status} %</div>
-                <div>{task.progress}</div>
+                <Loader operation={task.operation} message={task.status} progress={task.progress}/>
               </>
             )}
+            <CancelTask taskId={task.taskId} />
           </div>
         ))}
       </div>
     </div>
-  );
+  )
 };
 
 export default Results;

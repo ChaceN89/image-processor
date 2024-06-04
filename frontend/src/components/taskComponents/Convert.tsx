@@ -22,7 +22,7 @@ const Convert: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className='tool-card'>
       <h1>Convert</h1>
       <label>
         Select conversion type:

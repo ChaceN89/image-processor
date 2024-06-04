@@ -17,23 +17,23 @@ import { ImageProvider } from './context/ImageContext'; // for keeping track of 
 const App: React.FC = () => {
     return (
         <ImageProvider>
-           <div className="App">
-                <Header />
-                <main>
-                    <UploadImg />
-                    <div className="right-section">
-                        <div className="controls">
-                            <Resize />
-                            <Convert />
-                            <Flip />
-                            <Rotate />
-                            <Enhance />
-                        </div>
-                        <Results />
-                    </div>
-                </main>
-                <Footer />
-            </div>
+          <div className="App">
+						<Header />
+						<main>
+							<UploadImg />
+							<div className="right-side">
+								<div className='right-top'>
+									<Resize />
+									<Convert />
+									<Flip />
+									<Rotate />
+									<Enhance />
+								</div>
+								<Results/>						
+							</div>
+						</main>
+						<Footer />
+          </div>
         </ImageProvider>
     );
 };

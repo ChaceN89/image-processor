@@ -20,7 +20,7 @@ const Resize: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className='tool-card'>
       <h1>Resize</h1>
       <label>
         Height:

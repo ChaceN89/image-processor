@@ -21,7 +21,7 @@ const CancelTask: React.FC<CancelTaskProps> = ({ taskId }) => {
   };
 
   return (
-    <button className="cancel-button" onClick={handleCancelTask}>
+    <button onClick={handleCancelTask}>
       <FaTimes />
     </button>
   );

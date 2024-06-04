@@ -16,7 +16,7 @@ const Rotate: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className='tool-card'>
       <h1>Rotate</h1>
       <label>
         Rotate Degrees:

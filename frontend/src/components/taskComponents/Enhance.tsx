@@ -15,7 +15,7 @@ const Enhance: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className='tool-card'>
       <h1>Enhance</h1>
       <label>
         Enhance Factor:

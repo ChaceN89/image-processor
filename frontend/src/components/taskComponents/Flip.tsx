@@ -16,7 +16,7 @@ const Flip: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className='tool-card'>
       <h1>Flip</h1>
       <label>Flip Direction:</label>
       {flipOptions.map((option) => (

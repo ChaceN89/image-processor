@@ -17,7 +17,7 @@ def set_initial_status(task_type, task_id, SAVE_DIR):
     tasks_status[task_id]["task_name"] = task_type
     tasks_status[task_id]["progress"] = 0
 
-    sleep_time = random.uniform(0.1, 1)
+    sleep_time = random.uniform(0.5, 1.5)
     time.sleep(sleep_time)  # Simulate work being done
     tasks_status[task_id]["progress"] = 12
     time.sleep(sleep_time)  # Simulate work being done
@@ -27,7 +27,7 @@ def set_initial_status(task_type, task_id, SAVE_DIR):
 
 
 def set_mid_status(task_id):
-    sleep_time = random.uniform(0.1, 1)
+    sleep_time = random.uniform(0.5, 1.5)
 
     time.sleep(sleep_time)  # Simulate work being done
     tasks_status[task_id]["progress"] = 40
@@ -40,13 +40,12 @@ def set_mid_status(task_id):
 
 
 def set_end_status(task_id):
-    sleep_time = random.uniform(0.1, 1)
+    sleep_time = random.uniform(0.5, 1)
 
     time.sleep(sleep_time)  # Simulate work being done
     tasks_status[task_id]["progress"] = 75
     time.sleep(sleep_time)  # Simulate work being done
     tasks_status[task_id]["progress"] = 92
+    time.sleep(2)  # Simulate work being done before completing
     
-    # Update task status to completed
-    tasks_status[task_id]["status"] = "Completed"
-    tasks_status[task_id]["progress"] = 100
+
