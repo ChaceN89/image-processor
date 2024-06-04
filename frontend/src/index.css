@@ -29,8 +29,10 @@ html, body, #root, .App {
 header, footer {
   background-color:#0bdbb6; 
   padding: 10px;
-  text-align: center;
+  
   flex-shrink: 0;
+  display: flex;
+  gap: 10px;
 }
 body{
   background-color: #e9ffff; 
@@ -230,4 +232,28 @@ main {
   height: 20px;
   margin-bottom: 10px;
   background-color: #91ffff;
+}
+
+/* responsive design */
+@media screen and (max-width: 800px) {
+  main {
+    flex-direction: column;
+  }
+  .left-side {
+    width: 100%;
+    padding-top: 2px;
+  }
+  .right-side{
+    width: 100%;
+  }
+  .card{
+    height: 120px;
+    min-width: 100px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .right-top{
+    grid-template-columns: 1fr;
+    grid-gap: 5px;
+  }
 }

@@ -28,7 +28,7 @@ const Enhance: React.FC = () => {
           onChange={(e) => setEnhanceFactor(parseFloat(e.target.value))}
         />
       </label>
-      <button onClick={startEnhanceTask}>Start Enhance Task</button>
+      <button onClick={startEnhanceTask}>Enhance Brightness</button>
     </div>
   );
 };

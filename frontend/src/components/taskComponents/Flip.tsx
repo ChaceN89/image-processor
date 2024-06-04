@@ -32,7 +32,7 @@ const Flip: React.FC = () => {
           <label htmlFor={option}>{option.charAt(0).toUpperCase() + option.slice(1)}</label>
         </div>
       ))}
-      <button onClick={startFlipTask}>Start Flip Task</button>
+      <button onClick={startFlipTask}>Flip Image</button>
     </div>
   );
 };

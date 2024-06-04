@@ -42,7 +42,7 @@ const Resize: React.FC = () => {
         />
       </label>
    
-      <button onClick={startResizeTask}>Start Resize Task</button>
+      <button onClick={startResizeTask}>Resize Image</button>
     </div>
   );
 };

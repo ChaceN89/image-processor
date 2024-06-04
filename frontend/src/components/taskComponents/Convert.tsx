@@ -38,7 +38,7 @@ const Convert: React.FC = () => {
           ))}
         </select>
       </label>
-      <button onClick={startConvertTask}>Start Conversion Task</button>
+      <button onClick={startConvertTask}>Convert Image Format</button>
     </div>
   );
 };

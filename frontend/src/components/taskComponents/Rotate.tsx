@@ -30,7 +30,7 @@ const Rotate: React.FC = () => {
         />
       </label>
       <br />
-      <button onClick={startRotateTask}>Start Rotate Task</button>
+      <button onClick={startRotateTask}>Rotate Image</button>
     </div>
   );
 };
