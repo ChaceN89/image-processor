@@ -14,11 +14,15 @@ const UploadImg: React.FC = () => {
   };
   return (
     <div className="UploadImg">
-        <h2>Upload Image</h2>
+      <label className="custom-file-upload">
         <input type="file" onChange={handleFileChange} />
-        <div className="DisplaySelectedFile">
-            <DisplaySelectedFile />
-        </div>
+        Choose File
+      </label>        
+      {selectedFile && <p>Selected File: {selectedFile.name}</p>}
+
+      <div className="DisplaySelectedFile">
+          <DisplaySelectedFile />
+      </div>
     </div>
   );
 

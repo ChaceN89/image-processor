@@ -20,9 +20,7 @@ const App: React.FC = () => {
            <div className="App">
                 <Header />
                 <main>
-                    <div className="UploadImg">
-                        <UploadImg />
-                    </div>
+                    <UploadImg />
                     <div className="right-section">
                         <div className="controls">
                             <Resize />
@@ -31,9 +29,7 @@ const App: React.FC = () => {
                             <Rotate />
                             <Enhance />
                         </div>
-                        <div className="results">
-                            <Results />
-                        </div>
+                        <Results />
                     </div>
                 </main>
                 <Footer />

@@ -19,7 +19,7 @@ const Results: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="results">
       <div>Number of current tasks: { tasks.length}</div>
       <hr />
       {tasks.map((task, index) => (
