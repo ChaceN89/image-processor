@@ -1,5 +1,4 @@
 body {
-  margin: 20px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -10,4 +9,100 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Reset some default styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root, .App {
+  height: 100%;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+}
+
+header, footer {
+  background-color: #f1f1f1; /* Example background color */
+  padding: 10px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+main {
+  flex: 1;
+  display: flex;
+}
+
+.UploadImg {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 2px;
+}
+
+.UploadImg h2 {
+  margin-bottom: 10px;
+}
+
+.UploadImg input[type="file"] {
+  margin-bottom: 10px;
+}
+
+.UploadImg p {
+  margin-bottom: 10px;
+}
+
+.DisplaySelectedFile {
+  width: 100%;
+  height: calc(100% - 30px); /* Adjusting for header, input, and paragraph */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Hide any overflow to maintain container dimensions */
+}
+
+.DisplaySelectedFile img {
+  max-height: 100%; /* Maintain consistent height */
+  width: auto; /* Adjust width proportionally */
+  max-width: 100%; /* Prevent the image from being constrained by the width */
+  object-fit: contain; /* Ensure the image fits within the container without distortion */
+}
+
+
+
+
+.right-section {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 10px;
+  height: 75%;
+}
+
+.controls > * {
+  flex: 1 1 48%; /* Ensures two components per row */
+  margin-bottom: 10px;
+}
+
+.results {
+  height: 25%;
+  border-top: 1px solid #ccc; /* Example border for separation */
+  padding: 10px;
+  overflow-y: auto; /* Scroll if content exceeds height */
 }

@@ -10,12 +10,8 @@ const DisplaySelectedFile: React.FC = () => {
 
   const imageUrl = URL.createObjectURL(selectedFile);
 
-  return (
-    <div>
-      <h3>Selected Image</h3>
-      <img src={imageUrl} alt="Selected" style={{ maxWidth: '30%', height: '40%' }} />
-    </div>
-  );
+  return <img src={imageUrl} alt="Selected File" className="DisplaySelectedFile" />;
+
 };
 
 export default DisplaySelectedFile;
