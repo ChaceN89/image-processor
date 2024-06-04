@@ -41,7 +41,7 @@ const Results: React.FC = () => {
               </div>
             ) : (
               <>
-                <div>{task.status}</div>
+                <div>{task.status} %</div>
                 <div>{task.progress}</div>
               </>
             )}
