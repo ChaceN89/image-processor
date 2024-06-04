@@ -39,7 +39,7 @@ const Results: React.FC = () => {
                   <p>{ formatDate(task.timeEnded)}</p>
                   <DownloadImage taskId={task.taskId} />
                 </div>
-                <div>{task.operation} Image</div>
+                <div>Image {task.operation}</div>
               </>
             ):(
               <>

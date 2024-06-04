@@ -16,18 +16,17 @@ const Enhance: React.FC = () => {
 
   return (
     <div className='tool-card'>
-      <h1>Enhance</h1>
+      <h2>Enhance</h2>
       <label>
-        Enhance Factor:
+        Enhance Factor: {enhanceFactor}
         <input
           type="range"
           min="0"
           max="2"
-          step="0.1"
+          step="0.05"
           value={enhanceFactor}
           onChange={(e) => setEnhanceFactor(parseFloat(e.target.value))}
         />
-        <span>{enhanceFactor}</span>
       </label>
       <button onClick={startEnhanceTask}>Start Enhance Task</button>
     </div>

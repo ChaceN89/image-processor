@@ -23,7 +23,7 @@ const Convert: React.FC = () => {
 
   return (
     <div className='tool-card'>
-      <h1>Convert</h1>
+      <h2>Convert</h2>
       <label>
         Select conversion type:
         <select

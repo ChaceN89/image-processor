@@ -3,8 +3,8 @@ import { useTask } from '../../services/useTask'; // Adjust the path as necessar
 
 const Resize: React.FC = () => {
   const { handleStartTask } = useTask();
-  const [resizeHeight, setResizeHeight] = useState<number>(0);
-  const [resizeWidth, setResizeWidth] = useState<number>(0);
+  const [resizeHeight, setResizeHeight] = useState<number>(100);
+  const [resizeWidth, setResizeWidth] = useState<number>(100);
 
   const startResizeTask = async () => {
     if (resizeHeight <= 0 || resizeWidth <= 0) {
@@ -21,7 +21,7 @@ const Resize: React.FC = () => {
 
   return (
     <div className='tool-card'>
-      <h1>Resize</h1>
+      <h2>Resize</h2>
       <label>
         Height:
         <input
@@ -31,7 +31,7 @@ const Resize: React.FC = () => {
           min="1"
         />
       </label>
-      <br />
+
       <label>
         Width:
         <input
@@ -41,7 +41,7 @@ const Resize: React.FC = () => {
           min="1"
         />
       </label>
-      <br />
+   
       <button onClick={startResizeTask}>Start Resize Task</button>
     </div>
   );

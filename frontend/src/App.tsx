@@ -15,27 +15,27 @@ import Results from './components/Results'
 import { ImageProvider } from './context/ImageContext'; // for keeping track of the image states 
 
 const App: React.FC = () => {
-    return (
-        <ImageProvider>
-          <div className="App">
-						<Header />
-						<main>
-							<UploadImg />
-							<div className="right-side">
-								<div className='right-top'>
-									<Resize />
-									<Convert />
-									<Flip />
-									<Rotate />
-									<Enhance />
-								</div>
-								<Results/>						
-							</div>
-						</main>
-						<Footer />
-          </div>
-        </ImageProvider>
-    );
+	return (
+		<ImageProvider>
+			<div className="App">
+				<Header />
+				<main>
+					<UploadImg />
+					<div className="right-side">
+						<div className='right-top'>
+							<Resize />
+							<Convert />
+							<Flip />
+							<Rotate />
+							<Enhance />
+						</div>
+						<Results/>						
+					</div>
+				</main>
+				<Footer />
+			</div>
+		</ImageProvider>
+	);
 };
 
 export default App;
