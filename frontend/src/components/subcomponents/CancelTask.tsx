@@ -1,7 +1,7 @@
-// src/components/subcomponents/CancelTask.tsx
 import React from 'react';
 import { useImageContext } from '../../context/ImageContext';
 import { cancelTask } from '../../services/api'; // Import the cancelTask function
+import { FaTimes } from 'react-icons/fa'; // Import react-icons
 
 interface CancelTaskProps {
   taskId: string;
@@ -14,15 +14,15 @@ const CancelTask: React.FC<CancelTaskProps> = ({ taskId }) => {
     try {
       await cancelTask(taskId);
     } catch (error) {
-        console.error('Error canceling task:', error);
+      console.error('Error canceling task:', error);
     }
-    // remove the task rom the frontend if baclend call fails or succeds
+    // remove the task from the frontend if backend call fails or succeeds
     setTasks(tasks.filter(task => task.taskId !== taskId));
   };
 
   return (
-    <button onClick={handleCancelTask}>
-      Cancel Task
+    <button className="cancel-button" onClick={handleCancelTask}>
+      <FaTimes />
     </button>
   );
 };

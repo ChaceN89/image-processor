@@ -1,10 +1,9 @@
 import React from 'react';
-import DisplayTasks from './subcomponents/DisplayTasks';
 import { useImageContext } from '../context/ImageContext';
 import { urlToFile } from '../services/utils'; // Import the utility function
 import FetchTask from './subcomponents/FetchTask';
 import CancelTask from './subcomponents/CancelTask';
-
+import DownloadImage from './subcomponents/DownloadImage';
 
 const Results: React.FC = () => {
   const { tasks, setSelectedFile } = useImageContext();
@@ -20,30 +19,35 @@ const Results: React.FC = () => {
 
   return (
     <div className="results">
-      <div>Number of current tasks: { tasks.length}</div>
-      <hr />
-      {tasks.map((task, index) => (
-        <div key={index}>
-          <FetchTask taskId={task.taskId} />
-          <CancelTask taskId={task.taskId} />
-          <div>{task.progress}</div>
-          <div>{task.status}</div>
-          {task.status === 'Completed' && task.alteredImageUrl && (
-            <div>
-              <h4>Task Completed: {task.taskId}</h4>
-              <img
-                src={task.alteredImageUrl}
-                alt={`Result for ${task.taskId}`}
-                style={{ maxWidth: '30%', height: '40%', cursor: 'pointer' }}
-                onClick={() => handleImageClick(task.alteredImageUrl!, task.filename || "")}
-              />
-              <p>Time Ended: {task.timeEnded}</p>
-            </div>
-          )}
-          <hr />
-        </div>
-      ))}
-      <DisplayTasks />
+      {/* Section above the horizontal scroll box with the tasks */}
+      <div>Number of current tasks: {tasks.length}</div>
+      
+      <div className="tasks-container">
+        {tasks.map((task, index) => (
+          <div className='taskBox' key={index}>
+            <FetchTask taskId={task.taskId} />
+            {task.status === 'Completed' && task.alteredImageUrl ? (
+              <div className="task-completed">
+                <img
+                  src={task.alteredImageUrl}
+                  alt={`Result for ${task.taskId}`}
+                  onClick={() => handleImageClick(task.alteredImageUrl!, task.filename || "")}
+                />
+                <CancelTask taskId={task.taskId} />
+                <div className='photoInfo'>
+                  <p>{task.timeEnded}</p>
+                  <DownloadImage taskId={task.taskId} />
+                </div>
+              </div>
+            ) : (
+              <>
+                <div>{task.status}</div>
+                <div>{task.progress}</div>
+              </>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

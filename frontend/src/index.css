@@ -106,7 +106,7 @@ main {
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 10px;
-  height: 75%;
+  height: 65%;
 }
 
 .controls > * {
@@ -117,8 +117,63 @@ main {
 
 
 .results {
-  height: 25%;
+  height: 35%;
+  width: 100%; /* Fixed width for the results section */
+  overflow-x: auto; /* Horizontal scroll */
+  overflow-y: auto; /* Hide vertical overflow */
+  padding: 5px;
   border-top: 1px solid #ccc; /* Example border for separation */
+  white-space: nowrap; /* Prevent line breaks to ensure horizontal scrolling */
+}
+
+.tasks-container {
+  display: inline-flex; /* Use inline-flex to respect white-space: nowrap */
+  flex-direction: row-reverse; /* Newer tasks on the left */
+}
+
+.taskBox {
+  position: relative; /* Ensure child elements can be positioned relative to this */
+  width: 300px; /* Constant width for each task */
+  height: auto; /* Ensure the task box fits content */
+  margin-right: 10px; /* Space between tasks */
+  border: 1px solid #ccc; /* Example border */
   padding: 10px;
-  overflow-y: auto; /* Scroll if content exceeds height */
+  display: inline-block; /* Ensures each task box is treated as an inline block for horizontal scrolling */
+}
+
+.taskBox img {
+  max-width: 100%; /* Ensure the image fits within its container */
+  height: auto;
+  cursor: pointer;
+}
+
+.task-completed {
+  position: relative;
+}
+
+.cancel-button {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: red;
+  font-size: 20px;
+}
+
+.photoInfo{
+  display: flex;
+  overflow: auto;
+  justify-content: space-between;
+}
+
+.download-button {
+  bottom: 5px;
+  right: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: green;
+  font-size: 20px;
 }
