@@ -4,6 +4,7 @@ import { urlToFile } from '../services/utils'; // Import the utility function
 import FetchTask from './subcomponents/FetchTask';
 import CancelTask from './subcomponents/CancelTask';
 import DownloadImage from './subcomponents/DownloadImage';
+import { formatDate } from '../services/utils';
 
 const Results: React.FC = () => {
   const { tasks, setSelectedFile } = useImageContext();
@@ -35,7 +36,7 @@ const Results: React.FC = () => {
                 />
                 <CancelTask taskId={task.taskId} />
                 <div className='photoInfo'>
-                  <p>{task.timeEnded}</p>
+                  <p>{ formatDate(task.timeEnded)}</p>
                   <DownloadImage taskId={task.taskId} />
                 </div>
               </div>

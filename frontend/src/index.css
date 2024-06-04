@@ -108,31 +108,34 @@ main {
 
 .results {
   height: 35%;
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: auto;
+  overflow-x: auto; /* Horizontal scroll */
+  overflow-y: hidden; /* Hide vertical overflow */
   padding: 5px;
-  border-top: 1px solid #ccc;
-  white-space: nowrap;
+  border-top: 1px solid #ccc; /* Example border for separation */
+  white-space: nowrap; /* Prevent line breaks to ensure horizontal scrolling */
 }
 
 .tasks-container {
-  display: inline-flex; 
-  flex-direction: row-reverse; 
+  display: inline-flex; /* Use inline-flex to respect white-space: nowrap */
+  flex-direction: row; /* Tasks will be added from left to right */
 }
 
 .taskBox {
-  position: relative; 
-  width: 300px;
-  margin-right: 10px;
-  border: 1px solid #ccc; 
+  position: relative; /* Ensure child elements can be positioned relative to this */
+  width: 150px; /* Constant width for each task box */
+  height: 100%; /* Full height */
+  margin-right: 10px; /* Space between tasks */
+  border: 1px solid #ccc; /* Example border */
   padding: 10px;
-  display: inline-block;
+  display: inline-block; /* Ensures each task box is treated as an inline block for horizontal scrolling */
+  text-align: center; /* Center align content */
 }
 
 .taskBox img {
-  max-width: 100%; 
+  max-width: 100%; /* Ensure the image fits within its container */
+  max-height: 80px; /* Adjust max-height to ensure it fits in the allotted height */
   height: auto;
+  width: auto;
   cursor: pointer;
 }
 
