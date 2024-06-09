@@ -9,4 +9,4 @@ Could be adapted to a user authentication system where a user can access a list 
 
 ## backend
 - Create a virtual enviroment and install the libraries in the requirements.text file
-- run 'uvicorn main:app --reload'
+- run 'uvicorn main:app --reload' 
